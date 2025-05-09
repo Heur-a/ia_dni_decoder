@@ -1,14 +1,25 @@
+// Variables para los tokens y el bucket
+const awsCredentials = {
+  accessKeyId: "",  // Reemplaza con tu accessKeyId
+  secretAccessKey: "",  // Reemplaza con tu secretAccessKey
+  sessionToken: ""  // Reemplaza con tu sessionToken
+};
+
+const awsBucketName = "";  // Aquí puedes poner el nombre del bucket que quieras
+const awsRegion = "us-east-1";  // La región de tu bucket
+
+
 // Configura las credenciales de AWS
 AWS.config.update({
-  region: 'us-east-1',
+  region: awsRegion,
   credentials: new AWS.Credentials({
-    accessKeyId:'', //Sustituir por el recurrente,
-    secretAccessKey:'' ,//Sustituir,
-    sessionToken:''//Sustituir
+    accessKeyId: awsCredentials.accessKeyId,
+    secretAccessKey: awsCredentials.secretAccessKey,
+    sessionToken: awsCredentials.sessionToken
   })
 });
-
-const s3 = new AWS.S3({ params: { Bucket: 'marva04-bucket' } });
+// Configuración de S3 y Rekognition
+const s3 = new AWS.S3({ params: { Bucket: awsBucketName } });
 const rekognition = new AWS.Rekognition();
 
 // Función para procesar todas las imágenes de DNIs
@@ -192,7 +203,7 @@ function analyzeImage(imageName, jsonElement) {
   const params = {
     Image: {
       S3Object: {
-        Bucket: 'marva04-bucket',
+        Bucket: awsBucketName,
         Name: imageName
       }
     }
